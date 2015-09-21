@@ -57,6 +57,12 @@ The simplest way to execute the runs is to execute the following command (zsh):
 while (true) ; do ; API_HOST=<API_HOST> API_KEY=<API_KEY> python slave.py ; sleep 1 ; done
 ```
 
+## Manually set the host name
+
+```sh
+echo "myhost.local" >> .host_name
+```
+
 ## Install New Requirements
 
 ```sh
