@@ -44,10 +44,10 @@ See https://github.com/lukaselmer/simple-job-runner#deployment
 ### Schedule new runs
 
 * Adjust code/schedule.py
-* run API_HOST=<API_HOST> API_KEY=<API_KEY> python schedule.py
-  * e.g. APP_HOST=rocky-lowlands-2159.herokuapp.com API_KEY=zyMvxTzylN1ZKLd5TSaWQD9UsESsU00CGH3P python schedule.py
+* run ```API_HOST=<API_HOST> API_KEY=<API_KEY> python schedule.py```
+  * e.g. ```APP_HOST=rocky-lowlands-2159.herokuapp.com API_KEY=zyMvxTzylN1ZKLd5TSaWQD9UsESsU00CGH3P python schedule.py```
 
-You should see the scheduled runs on https://<API_HOST>/runs
+You should see the scheduled runs on https://\<API_HOST\>/runs
 
 ### Execute the runs
 
