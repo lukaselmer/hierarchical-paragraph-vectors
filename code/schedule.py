@@ -10,7 +10,7 @@ def schedule_main():
                           frequent_words_downsampling_dm=[0.0001], frequent_words_downsampling_dbow=[0.01], negative=[25],
                           hierarchical_paragraph_vectors=[0, 4], epochs_total=[epochs_total], learning_rate_type=['exp'],
                           experiment_number=[1])
-    narrow_params = dict(epochs=epochs, classifier_name=['svc'], classifier_c=[0.0195], classifier_penalty=['l2'], tfid_features=[0])
+    narrow_params = dict(epochs=epochs, classifier_name=['svc'], classifier_c=[0.01951], classifier_penalty=['l2'], tfid_features=[0])
 
     schedule_runs(general_params, narrow_params)
 
