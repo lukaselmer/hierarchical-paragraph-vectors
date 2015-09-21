@@ -1,0 +1,14 @@
+\begin{abstract}
+	Most standard machine learning algorithms require fixed-length, low-dimensional vectors to perform well. However, when working with text, such representations are difficult to obtain. In 2014, Le and Mikolov presented a novel method for generating so-called word embeddings \cite{Mikolov2013}. Their work represents the foundation for this master thesis.
+	
+	The main goal of this thesis is to extend and generalize the word embedding model to a hierarchical paragraph vector model. This means that different parts of the vector represent different contexts which are shared among sibling structures originating from the same parent text block. For example, the first part of the vector can be used to describe the document, the second part to describe the chapter, the third part to describe the paragraph and the last part to describe the individual sentence.
+	
+	In this thesis, we propose \emph{Hierarchical Paragraph Vectors}, which exploit hierarchical document structures. When applying this novel method to sentiment analysis tasks, empirical results show that it can increase the quality of the word embeddings at the cost of greater execution overhead.
+	
+	%In this thesis, we propose \emph{Hierarchical Paragraph Vectors}, which exploits hierarchical information to improve the quality of the word embeddings. When applying this novel method to sentiment analysis tasks, empirical results show that it can increase the quality of the word embeddings at the cost of greater overhead.
+	%The main goal of this thesis is to extend and generalize the word embedding model of \cite{Mikolov2013} to a hierarchical paragraph vector model. The introduced paragraph vector model by Le and Mikolov shares one paragraph vector within a block of text.
+	%The main goal of this thesis is to extend and generalize the word embedding model of \cite{Mikolov2013}. The introduced paragraph vector by Le and Mikolov represents a block of text by a single dedicated vector, which is shared within a block of text.
+	%This master thesis is based on distributed representations of sentences and documents \cite{Mikolov2013}. Currently, the paragraph vector model represents a block of text (for example a document) by a single dedicated vector. As a consequence, individual sub-blocks within a block of text do not share any information among each other.
+	%The main goal of this master thesis is to extend and generalize the word embedding model to a hierarchical paragraph vector model. This means that different parts of the vector represent different contexts, and are shared among siblings originating from the same parent text block. For example, the first part of the vector can be used to describe the document, the second part to describe the chapter, the third part to describe the paragraph and the last part to describe the sentence.
+	%[peek into results and experiments]
+\end{abstract}

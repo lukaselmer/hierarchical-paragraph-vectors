@@ -1,0 +1,20 @@
+\chapter{Conclusion and Future Work}\label{conclusion-and-future-work}
+
+To summarize, we introduced a novel method for generating high-quality low-dimensional word embeddings by extending the state-of-the-art methods PV-DM and PV-DBOW, using hierarchical data. We compared the novel algorithms HPV-DBOW and HPV-DM to the baselines PV-DM, PV-DBOW and TF-IDF\@.
+
+We evaluated the word embeddings by applying HPV-DBOW and HPV-DM to the IMDB movie review dataset and measured the accuracy of the predicted sentiment. To retain comparable results, we conducted a broad search to find suitable hyperparameter combinations. We reached an accuracy of 90\%, using only elementary preprocessing.
+
+Moreover, we implemented 7 different hierarchical paragraph vector variants, and conclude that using high-level hierarchies, such as topics and categories, we can increase the quality of the word embeddings at a cost of greater execution overhead. Low-level hierarchies, such as paragraphs and sentences, do not contribute to improving the quality of the word vectors. Furthermore, when using few training epochs, we have shown that hierarchical data can boost the quality of the word embeddings, but when scaled according to the execution speed, HPV trains slower than PV.
+
+Finally, we analyzed the memory and runtime overhead when using HPV with different layers of hierarchies, and we compared it to PV-DM and PV-DBOW\@. While the overhead is significant, it is still feasible to process large amounts of text.
+
+For future work, we suggest that HPV is evaluated on more datasets, where other hierarchies are available for training, and where HPV be evaluated on other tasks besides sentiment analysis. Furthermore, the embeddings should be trained and evaluated on larger corpora, so that multiple passes through the data may not be necessary.
+
+Regarding the runtime and memory usage, we suggest that the implementation be analyzed in more detail. This can lead to optimizations which improve training speed and memory efficiency. Also, we recommend implementing different dimensionalities for word vectors and hierarchical paragraph vectors, ideally so that a different dimensionality can be defined per hierarchy layer.
+
+Finally, more combinations of models and parameters should be evaluated, and HPV-DBOW and HPV-DM should be tested independently and in combination with other models.
+
+%To summarize, we introduced a novel method to generate high-quality low-dimensionality word embeddings by extending the state of the art methods PV-DM and PV-DBOW to use hierarchical data. The newly introduced algorithms HPV-DBOW and HPV-DM have been shown to slightly outperform the baseline in sentiment analysis at a cost of greater overhead. Furthermore, we have shown that hierarchical data can boost the word embeddings quality when only few training epochs are used.
+%We implemented 7 different hierarchical paragraph vector implementations, and we conclude that using high-level hierarchies, such as topics and categories, can increase the quality of the word embeddings, while low level hierarchies, such as paragraphs and sentences, do not contribute to improving the quality of the word vectors.
+% Moreover, we evaluated the word embeddings quality by applying them to the IMDB dataset and predicting the sentiment for movie reviews. We reached an accuracy of 90\%, while using only elementary preprocessing. Moreover, we compared the novel method to the state of the art baselines PV-DM, PV-DBOW and TF-IDF\@.
+% We conducted a broad search to find suitable hyperparameter combinations.

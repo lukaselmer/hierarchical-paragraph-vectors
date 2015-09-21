@@ -1,0 +1,92 @@
+\chapter{Related Work}\label{related-work}
+
+In this Chapter, the related research will be described. It will start with traditional and common representations, and describe their advantages and disadvantages. Next, more modern representations will be surveyed. Finally, publications describing hierarchical data will be described.
+
+\section{Common Representations and Methods}
+
+In NLP, probably the most widespread vector representation of text is the bag of words (BOW) representation~\cite{Harris1954}. For every word in the vocabulary, there is exactly one position in this vector, and if a word occurs $n$ times in a text, this component will be $n$ in the vector. Since the dimensionality of this vector is the size of the vocabulary, the BOW representation appeals by its simplicity. However, it suffers from high dimensionality, since the dimensionality is equal to the vocabulary size. Also sparsity is a major drawback, because a text block only contains a small fraction of all words in the vocabulary. Furthermore, the word order is lost, and therefore, different sentences with different meanings can have exactly the same representation.
+
+Another commonly used representation is the bag-of-n-grams. While it mitigates some shortcomings of the BOW model, it also suffers from high dimensionality and sparsity.
+
+Term frequency--inverse document frequency (TF--IDF) is a standard model in information retrieval. The term frequency is calculated by the number of times a word occurs in a document, while the inverse document frequency is the inverse of how often a word occurs in the whole corpus. The product of these two values is a weighted value, where rare words have a higher value when occurring in documents compared to frequently appearing words, for example stop words. Similar to the BOW model, a vector per document can be constructed by assigning a component of the vector per word in the corpus. Thus, it can be applied to any text. However, it also suffers from high dimensionality for the same reason as the BOW model does. To avoid this problem, the words can be ordered by term frequency, and only the top $n$ words are considered in the TF--IDF vector. Other words in this text are simply ignored. More information about TF--IDF can be found in~\ref{appendix:tf-idf} and in~\cite{Wu2008}.
+
+For example, let us assume that we would like to produce word embeddings for the following documents.
+\begin{displaymath}
+\begin{array}{l|l}
+\text{Document} & \text{Text} \\ 
+\hline
+d_1 & \text{The cat sleeps on the sofa.} \\
+d_2 & \text{The mouse eats cheese.} \\
+d_3 & \text{The cat tries to catch the mouse.} \\
+\end{array}
+\end{displaymath}
+BOW produces the following word embeddings.
+\begin{displaymath}
+\begin{array}{l|rrrrrrrrrrr}
+& \rotatebox[origin=l]{90}{the} &  \rotatebox[origin=l]{90}{cat} &  \rotatebox[origin=l]{90}{sleeps}  & \rotatebox[origin=l]{90}{on} &  \rotatebox[origin=l]{90}{sofa} & \rotatebox[origin=l]{90}{mouse} & \rotatebox[origin=l]{90}{eats} & \rotatebox[origin=l]{90}{cheese} & \rotatebox[origin=l]{90}{tries} & \rotatebox[origin=l]{90}{to} & \rotatebox[origin=l]{90}{catch} \\ 
+\hline
+d_1 & 2 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+d_2 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0\\
+d_3 & 2 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 1 & 1\\
+\end{array}
+\end{displaymath}
+3-gram of words produces the following word embeddings.
+\begin{displaymath}
+\begin{array}{l|rrrrrrrrrrr}
+& \rotatebox[origin=l]{90}{the cat sleeps} &  \rotatebox[origin=l]{90}{cat sleeps on} &  \rotatebox[origin=l]{90}{sleeps on the}  & \rotatebox[origin=l]{90}{on the sofa} &  \rotatebox[origin=l]{90}{the mouse eats} & \rotatebox[origin=l]{90}{mouse eats cheese} & \rotatebox[origin=l]{90}{the cat tries} & \rotatebox[origin=l]{90}{cat tries to} & \rotatebox[origin=l]{90}{tries to catch} & \rotatebox[origin=l]{90}{to catch the} & \rotatebox[origin=l]{90}{catch the mouse} \\ 
+\hline
+d_1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+d_2 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0\\
+d_3 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1\\
+\end{array}
+\end{displaymath}
+TF-IDF produces the following word embeddings.
+\begin{displaymath}
+\begin{array}{l|rrrrrrrrrrr}
+& \multicolumn{1}{c}{\rotatebox[origin=l]{90}{cat}} &  \multicolumn{1}{c}{\rotatebox[origin=l]{90}{catch}} &  \multicolumn{1}{c}{\rotatebox[origin=l]{90}{cheese}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{eats}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{mouse}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{on}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{sleeps}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{sofa}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{the}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{to}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{tries}} \\ 
+\hline
+d_1 & 0.34 & 0.0 & 0.0 & 0.0 & 0.0 & 0.45 & 0.45 & 0.45 & 0.53 & 0.0 & 0.0\\
+d_2 & 0.0 & 0.0 & 0.58 & 0.58 & 0.44 & 0.0 & 0.0 & 0.0 & 0.35 & 0.0 & 0.0\\
+d_3 & 0.32 & 0.42 & 0.0 & 0.0 & 0.32 & 0.0 & 0.0 & 0.0 & 0.5 & 0.42 & 0.42\\
+\end{array}
+\end{displaymath}
+
+Finally, all the representations discussed above (BOW, bag-of-n-grams, TF--IDF) do not capture the semantics of words. For example, the words ``fast'' and ``quick'' are as far apart from each other as they are from the word ``blue'', even though the words ``fast'' and ``quick'' are semantically more similar to each other. It is even more surprising that such na{\"\i}ve models can perform relatively well.
+
+\section{Neural Networks for Language Models}
+
+The theory underlying artificial neural networks has been existing for a long time~\cite{Ackley1985, LeCun1985, Rumelhart1986}. The two fundamental concepts for these networks are gradient descent and backpropagation. Feedforward neural network language models (NNLM) build on this technique and have deeply studied and tuned in recent publications~\cite{Bengio2006, Collobert2008, Mnih2009, Turian2010}. These NNLMs have been shown to outperform the n-gram models significantly. One major drawback of these techniques is that they are computationally expensive, and thus slow to train and test.
+
+In 2013, Mikolov et al.\ published~\cite{Mikolov2013a}, where they describe the recurrent neural network language model (RNNLM). This network helps to overcome some shortcomings of the NNLM\@. Specifically, it has a short-term memory, and thus can model more complex behavior than shallow neural networks~\cite{Kombrink2011}~\cite{Bengio2007}. A disadvantage of RNNs is their greater need for resources and thus prohibitively large computational cost. However, Mikolov et al.\ managed, with the help of approximate algorithms and an optimized implementation, to massively reduce computational complexity. The result of this are two new models, summarized under the name Word2vec: continuous bag-of-words models (CBOW) and continuous skip-gram models (skip-gram). More information about these models can be found in Chapter~\ref{preliminaries}.
+
+In their paper~\cite{Le2014} in 2014, Le and Mikolov extended the CBOW and Skip-gram model by a paragraph vector. This new vector enables arbitrary blocks of text (for example articles, paragraphs, sentences) to learn and share a common vector, which acts as a memory to learn the word vectors. The CBOW model that is extended by the paragraph vector (PV) is called PV-DBOW, while the extended Skip-gram model is called Distributed Memory Model of Paragraph Vectors (PV-DM). The name ``distributed memory'' originates from the fact that the paragraph vector acts as a memory for the current context. These two models are also known as Doc2vec.
+
+\section{Alternative Word Embedding Models}
+
+In~\cite{Goldberg2014a}, the authors analyze the skip-gram model with negative sampling. They suggest that the embedding method by Mikolov et al.\ is implicitly factorizing a word-content matrix, and they attempt to implement this factorization directly. They conclude that their factorization method is better suited to optimize the objective by Mikolov et al. However, their model does not perform well on the word anology task.
+
+In~\cite{Pennington2014}, the authors present the Global Vectors model (GloVe). Their model is a combination of matrix factorization methods and local context window methods. Though their model works differently compared to the model by Mikolov et al., the two models perform similarly well. In~\cite{Shi2014}, the authors link the model by Mikolov et al.\ with GloVe by explaining out the similarities and the differences.
+
+\section{Exploiting Hierarchies}
+
+There have been many approaches to using hierarchies for NLP, specifically with NNLMs. However, to the best knowledge of the author, hierarchies have not yet been combined with the paragraph vectors of~\cite{Le2014}.
+
+In~\cite{Luong2013}, the authors build a hierarchy of single words by modeling the morphemic compositionality, which can be seen as a specialization of HPV\@.
+
+In~\cite{Morin2005}, the authors use clustered words from WordNet~\cite{Fellbaum1998} by hierarchically decomposing the conditional probabilities as an alternative for importance sampling to speed up the training of the word embeddings. Furthermore,~\cite{Mnih2009} extended the ideas in~\cite{Morin2005}.
+
+%todo tbd carsten: recheck
+In~\cite{Fu2014}, the authors use word embeddings, obtained by skip-gram, to learn semantic hierarchies. They claim that hierarchical information is encoded in word embeddings. This encourages the use of existing hierarchies to improve the quality of word embeddings.
+
+%todo low prio: go more in depth. q: cite more? a: not neccessarily more, buy you may ment to go deeper for the relevant existing citations on word embeddings.
+
+
+% cite more in depth?
+%\section{Cite more?}
+%[Linguistic Regularities in Continuous Space Word Representations]?
+%[Hierarchical Reasoning with Distributed Vector Representations]
+%[Hierarchical Neural Language Models for Joint Representation of Streaming Documents and their Content]
+%[Deep Recursive Neural Networks for Compositionality in Language]
+%\href{http://arxiv.org/pdf/1504.05070v2.pdf}{\emph{http://arxiv.org/pdf/1504.05070v2.pdf}}
+%\href{http://www.aclweb.org/website/old_anthology/W/W96/W96-0103.pdf}{\emph{http://www.aclweb.org/website/old\_anthology/W/W96/W96-0103.pdf}}
+%\href{http://dl.acm.org/citation.cfm?id=993390}{\emph{http://dl.acm.org/citation.cfm?id=993390}}

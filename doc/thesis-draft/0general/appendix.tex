@@ -1,0 +1,40 @@
+\chapter{Appendix}
+
+\section{Learning Rate Type}\label{appendix:learning-rate-type}
+
+For all final experiments, a maximum learning rate of $l_{max}=0.025$ and a minimum learning rate of $l_{min}=0.001=10^{-3}$ have been used. In the beginning, we used $l_{min}=10^{-4}$, but after the learning rate decreased to below $10^{-3}$, the accuracy did not change anymore. Thus, the minimum learning rate was set to $10^{-3})$.
+
+When only one epoch is scheduled, we use $l_{max}$. Otherwise, the learning rate is decreased after each epoch, using either a linear or an exponential function, see below.
+
+\subsection{Linear}
+
+By linear learning rate we mean a function which decreases linearly from the maximum learning rate $l_{max}$ to the minimum learning rate $l_{min}$. To calculate the learning rate for each step, we first set the learning rate of the first step to $l_{max}$, and the learning rate of the last step $n$ to $l_{min}$. The learning rate for epoch $i$ is calculated as follows.
+\begin{displaymath}
+l(i) = l_{max} - (i-1) \times \frac{l_{max} - l_{min}}{n-1}
+\end{displaymath}
+
+\subsection{Exponential}
+
+The exponential case works analogously to the linear case. The learning rate for epoch $i$ is calculated as follows.
+\begin{displaymath}
+l(i) = l_{max} \times \left(\sqrt[l_{max}-1]{\frac{l_{min}}{l_{max}}}\right)^{i-1}
+\end{displaymath}
+
+%todo low prio: add graphs for the learning rate
+
+
+\section{TF-IDF}\label{appendix:tf-idf}
+
+We use scikit-learn version 0.16.1 for the TF-IDF calculation\footnote{\url{http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html}} with all default options, except the option ``max\_features'', which represents the maximum vector dimensionality.
+
+From the documentation: ``The actual formula used for tf-idf is $tf \times (idf + 1) = tf + tf \times idf$, instead of $tf \times idf$. The effect of this is that terms with zero idf, i.e. that occur in all documents of a training set, will not be entirely ignored. [ \ldots ] Parameter max\_features: If not None, build a vocabulary that only consider the top max\_features features ordered by term frequency across the corpus.''
+
+\section{Technical Implementation of Hierarchy Splitting}\label{appendix:hierarchy-splitting}
+
+Hierarchy splitting is implemented in a modest fashion, which essentially works using regular expressions and is tuned towards the IMDB dataset. We use the following expressions to split each hierarchy. The implementation can be found here\footnote{\url{https://github.com/lukaselmer/hierarchical-paragraph-vectors}}.
+
+\begin{description}
+	\item[Paragraphs] ``\textless br /\textgreater \textless br /\textgreater'', ``\textless br /\textgreater'', ``\textless hr\textgreater''.
+	\item[Sentences] ``!'', ``?'', ``.'', and consecutive combinations of these symbols, for example ``!!'' and ``!?!''.
+	\item[Sub-sentences] ``,'', ``;'', ``:'', ``('', ``)''.
+\end{description}
