@@ -28,6 +28,13 @@ pyenv virtualenv 3.4.3 master-thesis-kaggle-3.4.3
 pip install -r requirements.txt
 ```
 
+* Unzip the data to reproduce the results: unzip the file in code/model_data/cache/data-export-new.hdfConverted3.csv.hdf.zip to code/model_data/cache/data-export-new.hdfConverted3.csv.hdf
+
+The data is from:
+
+* http://ai.stanford.edu/~amaas/data/sentiment/
+* https://www.kaggle.com/c/word2vec-nlp-tutorial/data
+
 ## Usage
 
 ### Deploy the Simple Job Runner
