@@ -1,3 +1,3 @@
 # Hierarchical Paragraph Vectors
 
-http://lukaselmer.github.io/hierarchical-paragraph-vectors/
+https://lukaselmer.github.io/hierarchical-paragraph-vectors/
